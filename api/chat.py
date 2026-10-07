@@ -7,6 +7,8 @@ from http.server import BaseHTTPRequestHandler
 
 import torch
 
+torch.set_num_threads(1)
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if ROOT not in sys.path:
     sys.path.insert(0, ROOT)
@@ -102,11 +104,19 @@ class handler(BaseHTTPRequestHandler):
         self._send(204, {})
 
     def do_GET(self):
-        try:
-            _get_runtime()
-            self._send(200, {"ok": True, "model": "MiniLLM", "device": "cpu", "ready": True})
-        except Exception as exc:
-            self._send(500, {"ok": False, "ready": False, "error": str(exc)})
+        # Keep the health check lightweight. Loading PyTorch + the trained weights
+        # can take a few seconds on a cold instance; that should not make the UI
+        # look offline before the first generation request.
+        self._send(
+            200,
+            {
+                "ok": True,
+                "model": "MiniLLM",
+                "device": "cpu",
+                "ready": True,
+                "model_loaded": _MODEL is not None,
+            },
+        )
 
     def do_POST(self):
         try:
