@@ -2,7 +2,3 @@
 name = "minillm"
 version = "0.1.0"
 requires-python = ">=3.12,<3.13"
-dependencies = [
-    "sentencepiece==0.2.0",
-    "torch @ https://download.pytorch.org/whl/cpu/torch-2.5.1%2Bcpu-cp312-cp312-linux_x86_64.whl",
-]
