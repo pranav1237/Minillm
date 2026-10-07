@@ -1,3 +1,2 @@
---extra-index-url https://download.pytorch.org/whl/cpu
-torch==2.5.1+cpu
+torch @ https://download.pytorch.org/whl/cpu/torch-2.5.1%2Bcpu-cp312-cp312-linux_x86_64.whl
 sentencepiece==0.2.0
