@@ -1,104 +1,12 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#08090d">
-<meta name="description" content="MiniLLM Studio — a clean interface for exploring and chatting with the MiniLLM project.">
-<title>MiniLLM Studio</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#07080c"><title>MiniLLM — Playground</title>
 <style>
-:root{--bg:#08090d;--panel:#101219;--panel2:#151823;--line:#252a38;--text:#f5f7fb;--muted:#8e96a8;--accent:#9b7cff;--accent2:#48d7ff;--good:#55d69a;--danger:#ff7c93}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 75% 0%,#202044 0,#0c0d14 35%,var(--bg) 68%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-button,input,textarea{font:inherit}button{cursor:pointer}
-.app{min-height:100vh;display:grid;grid-template-columns:250px 1fr}
-.sidebar{border-right:1px solid var(--line);padding:22px 16px;display:flex;flex-direction:column;gap:24px;background:rgba(8,9,13,.72);backdrop-filter:blur(20px)}
-.brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:-.03em}.logo{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;color:#090a0f;box-shadow:0 8px 30px #6d5bff33}
-.nav{display:grid;gap:7px}.nav button{border:1px solid transparent;background:transparent;color:var(--muted);text-align:left;padding:11px 12px;border-radius:10px}.nav button.active,.nav button:hover{background:#ffffff08;color:var(--text);border-color:var(--line)}
-.model-card{margin-top:auto;border:1px solid var(--line);background:linear-gradient(180deg,#151823,#0e1016);border-radius:15px;padding:14px}.eyebrow{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}.model-name{font-weight:750;margin:7px 0}.status{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:12px}.dot{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 12px #55d69a}
-.main{min-width:0}.topbar{height:68px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:#08090d66;backdrop-filter:blur(20px)}.topbar .hint{color:var(--muted);font-size:12px}.icon-btn{border:1px solid var(--line);background:#ffffff06;color:var(--text);width:38px;height:38px;border-radius:10px}
-.content{max-width:1180px;margin:0 auto;padding:42px 28px 34px}.hero{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:28px}.hero h1{font-size:clamp(34px,5vw,62px);line-height:.98;letter-spacing:-.055em;margin:8px 0 12px}.hero p{max-width:650px;color:var(--muted);font-size:15px;line-height:1.65;margin:0}.pill{display:inline-flex;align-items:center;gap:7px;border:1px solid #ffffff14;background:#ffffff08;padding:7px 10px;border-radius:999px;color:#cfd4df;font-size:11px}
-.grid{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:18px}.chat{min-height:570px;border:1px solid var(--line);background:linear-gradient(180deg,#11131bde,#0d0f15e8);border-radius:20px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 80px #0005}.chat-head{padding:15px 17px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.chat-title{font-weight:700}.messages{flex:1;padding:22px;display:flex;flex-direction:column;gap:14px;overflow:auto}.msg{max-width:78%;padding:12px 14px;border-radius:15px;line-height:1.55;font-size:14px;white-space:pre-wrap}.msg.user{align-self:flex-end;background:linear-gradient(135deg,#6954d9,#8b70e9);color:#fff;border-bottom-right-radius:5px}.msg.assistant{align-self:flex-start;background:#171a23;border:1px solid var(--line);color:#dfe3ec;border-bottom-left-radius:5px}.msg.system{max-width:none;background:#0d1119;border:1px dashed #31384a;color:#9da6b7;font-size:12px}.composer{border-top:1px solid var(--line);padding:13px;display:flex;gap:10px}.composer textarea{flex:1;resize:none;min-height:48px;max-height:130px;border:1px solid var(--line);border-radius:13px;background:#0b0d12;color:var(--text);padding:13px;outline:none}.composer textarea:focus{border-color:#6f61c5}.send{border:0;border-radius:13px;padding:0 18px;background:linear-gradient(135deg,var(--accent),#7259e8);color:#fff;font-weight:750}.send:disabled{opacity:.45;cursor:not-allowed}
-.panel{border:1px solid var(--line);background:#101219cc;border-radius:20px;padding:18px;height:max-content}.panel h3{font-size:13px;margin:0 0 14px}.facts{display:grid;gap:10px}.fact{padding:11px 12px;background:#ffffff04;border:1px solid #ffffff08;border-radius:11px}.fact b{display:block;font-size:12px;margin-bottom:4px}.fact span{color:var(--muted);font-size:11px;line-height:1.45}.divider{height:1px;background:var(--line);margin:18px 0}.connect{display:grid;gap:9px}.connect input{width:100%;border:1px solid var(--line);border-radius:10px;background:#0b0d12;color:var(--text);padding:10px;font-size:12px;outline:none}.connect button{border:1px solid var(--line);background:#ffffff08;color:var(--text);border-radius:10px;padding:9px;font-size:12px}.connect small{color:var(--muted);line-height:1.5}
-.footer{padding:20px 0;color:#626b7c;font-size:11px;text-align:center}
-@media(max-width:900px){.app{grid-template-columns:1fr}.sidebar{display:none}.grid{grid-template-columns:1fr}.panel{order:-1}.content{padding:28px 16px}.topbar{padding:0 16px}.hero{display:block}.hero .pill{margin-top:18px}}
-</style>
-</head>
-<body>
-<div class="app">
-<aside class="sidebar">
-  <div class="brand"><div class="logo">M</div><span>MiniLLM Studio</span></div>
-  <div class="nav">
-    <button class="active" data-view="chat">◈ &nbsp; Playground</button>
-    <button data-view="about">◇ &nbsp; Architecture</button>
-  </div>
-  <div class="model-card">
-    <div class="eyebrow">Model</div>
-    <div class="model-name">Mini Decoder-Only Transformer</div>
-    <div class="status"><span class="dot"></span> UI ready</div>
-  </div>
-</aside>
-<main class="main">
-  <header class="topbar"><div class="hint">A focused interface for the existing MiniLLM project</div><button class="icon-btn" id="clear" title="Clear conversation">↺</button></header>
-  <section class="content">
-    <div class="hero">
-      <div><span class="pill">PyTorch · Character/Token LM · Causal attention</span><h1>Small model.<br><span style="color:#9b7cff">Clean playground.</span></h1><p>Explore the MiniLLM project without changing its training or inference code. Connect the existing runtime when you want live generations.</p></div>
-    </div>
-    <div class="grid">
-      <section class="chat">
-        <div class="chat-head"><div class="chat-title">Chat with MiniLLM</div><span class="eyebrow" id="connectionLabel">Runtime not connected</span></div>
-        <div class="messages" id="messages">
-          <div class="msg assistant">Hi — I’m the MiniLLM interface. Connect a compatible inference endpoint in the panel to send prompts to the real model.</div>
-          <div class="msg system">No fake responses are generated here. The original repository contains the PyTorch model code, while its trained runtime artifacts are not available as deployable Vercel files.</div>
-        </div>
-        <div class="composer"><textarea id="prompt" placeholder="Write a prompt…" rows="1"></textarea><button class="send" id="send">Send</button></div>
-      </section>
-      <aside class="panel">
-        <h3>Project snapshot</h3>
-        <div class="facts">
-          <div class="fact"><b>Decoder-only</b><span>Causal self-attention prevents tokens from seeing future positions.</span></div>
-          <div class="fact"><b>Attention</b><span>Multi-head scaled dot-product attention with residual connections.</span></div>
-          <div class="fact"><b>Training</b><span>PyTorch training pipeline with tokenizer and saved model artifacts.</span></div>
-          <div class="fact"><b>Vercel-safe UI</b><span>Zero frontend dependencies; fast static deployment.</span></div>
-        </div>
-        <div class="divider"></div>
-        <h3>Connect inference</h3>
-        <div class="connect">
-          <input id="endpoint" placeholder="https://your-api.example/chat" autocomplete="off">
-          <button id="save">Save endpoint</button>
-          <small>Expected request: POST JSON with <code>prompt</code>. The endpoint should return <code>{ "reply": "..." }</code>.</small>
-        </div>
-      </aside>
-    </div>
-    <div class="footer">MiniLLM Studio · frontend added without altering the model implementation</div>
-  </section>
-</main>
-</div>
+:root{--bg:#07080c;--panel:#0e1017;--line:#242938;--text:#f5f6fb;--muted:#8b93a6;--purple:#9271ff;--cyan:#5de2ff;--good:#56d79a}*{box-sizing:border-box}html,body{margin:0;background:radial-gradient(900px 500px at 80% -10%,#33246955,transparent 60%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}button,input,textarea{font:inherit}.app{min-height:100vh;display:grid;grid-template-columns:240px 1fr}.side{border-right:1px solid var(--line);padding:18px 14px;display:flex;flex-direction:column;background:#08090dbb;backdrop-filter:blur(18px)}.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.04em;padding:8px}.mark{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--purple),var(--cyan));color:#090a0f;font-weight:900}.nav{margin-top:24px;display:grid;gap:6px}.nav button{border:1px solid transparent;background:transparent;color:var(--muted);padding:11px 12px;text-align:left;border-radius:10px}.nav button.active,.nav button:hover{background:#fff8;border-color:var(--line);color:var(--text)}.sidefoot{margin-top:auto;border:1px solid var(--line);border-radius:14px;padding:13px;background:#0c0e14}.label{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:#70798d}.model{font-size:12px;font-weight:750;margin:7px 0}.health,.status{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--muted)}.health i,.status i{width:7px;height:7px;border-radius:50%;background:#71798a}.health.ready i,.status.ready i{background:var(--good);box-shadow:0 0 12px #56d79a}.main{min-width:0}.top{height:64px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 24px}.top span{font-size:12px;color:var(--muted)}.wrap{max-width:1180px;margin:auto;padding:38px 24px}.hero{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:25px}.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#858da0}.hero h1{font-size:clamp(40px,6vw,72px);line-height:.93;letter-spacing:-.06em;margin:9px 0 14px}.gradient{background:linear-gradient(90deg,var(--purple),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{max-width:650px;color:var(--muted);line-height:1.65;margin:0;font-size:14px}.badge{border:1px solid var(--line);background:#ffffff06;padding:9px 12px;border-radius:999px;white-space:nowrap;font-size:11px;color:#cbd0db}.layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px}.chat{height:650px;border:1px solid var(--line);background:linear-gradient(180deg,#11131bd9,#0b0d13ed);border-radius:18px;display:flex;flex-direction:column;overflow:hidden}.chathead{height:58px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 16px}.chathead b{font-size:13px}.messages{flex:1;overflow:auto;padding:20px;display:flex;flex-direction:column;gap:13px}.bubble{max-width:min(78%,680px);padding:12px 14px;border-radius:14px;line-height:1.58;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}.assistant{align-self:flex-start;background:#161923;border:1px solid var(--line);border-bottom-left-radius:5px}.user{align-self:flex-end;background:linear-gradient(135deg,#7658e7,#9472ff);border-bottom-right-radius:5px}.notice{align-self:stretch;max-width:none;background:#0c1018;border:1px dashed #30374a;color:#9da6b8;font-size:12px}.typing{display:none;color:#969fb1;font-size:12px;padding:0 20px 10px}.typing.show{display:block}.composer{border-top:1px solid var(--line);padding:13px;display:flex;gap:9px;background:#0b0d12}.composer textarea{min-height:48px;max-height:130px;resize:none;flex:1;background:#080a0f;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:12px 13px;outline:none}.composer textarea:focus{border-color:#6655b8}.send{width:92px;border:0;border-radius:12px;background:linear-gradient(135deg,var(--purple),#7657e9);color:#fff;font-weight:800}.send:disabled{opacity:.5}.panel{border:1px solid var(--line);background:#0f1118d9;border-radius:18px;padding:16px;height:max-content}.panel h3{font-size:12px;margin:0 0 12px}.setting{margin:14px 0}.settingrow{display:flex;justify-content:space-between;align-items:center;color:#b4bbca;font-size:11px;margin-bottom:7px}.setting input[type=range]{width:100%;accent-color:var(--purple)}.value{color:var(--text);font-variant-numeric:tabular-nums}.fact{border:1px solid #ffffff08;background:#ffffff03;border-radius:11px;padding:11px;margin-top:8px}.fact b{font-size:11px;display:block;margin-bottom:4px}.fact span{font-size:10px;line-height:1.45;color:var(--muted)}.new{width:100%;border:1px solid var(--line);background:#ffffff06;color:var(--text);border-radius:10px;padding:10px;margin-bottom:16px}.footer{color:#60697b;text-align:center;font-size:10px;margin-top:18px}@media(max-width:900px){.app{grid-template-columns:1fr}.side{display:none}.top{padding:0 15px}.wrap{padding:26px 14px}.hero{display:block}.badge{display:inline-block;margin-top:15px}.layout{grid-template-columns:1fr}.panel{order:-1}.chat{height:calc(100vh - 310px);min-height:510px}}
+</style></head><body><div class="app"><aside class="side"><div class="brand"><div class="mark">M</div><span>MiniLLM</span></div><div class="nav"><button class="active">◈ &nbsp; Playground</button><button id="about">◇ &nbsp; About model</button></div><div class="sidefoot"><div class="label">Local model</div><div class="model">Tiny Decoder-Only Transformer</div><div class="health" id="health"><i></i><span>Checking runtime…</span></div></div></aside><main class="main"><header class="top"><span>Trained MiniLLM · live inference</span><div class="status" id="topStatus"><i></i><span>Connecting</span></div></header><section class="wrap"><div class="hero"><div><div class="eyebrow">Your trained model, on the web</div><h1>Small model.<br><span class="gradient">Real responses.</span></h1><p>Chat directly with the trained MiniLLM from the original repository. No mock answers, no external endpoint configuration — this interface talks to the deployed model.</p></div><div class="badge">PyTorch · CPU inference</div></div><div class="layout"><section class="chat"><div class="chathead"><b>MiniLLM Playground</b><span class="eyebrow">256 token context</span></div><div class="messages" id="messages"><div class="bubble assistant">Hello! I’m your deployed MiniLLM. Give me a prompt and I’ll generate a response using the trained weights from this project.</div></div><div class="typing" id="typing">MiniLLM is generating…</div><div class="composer"><textarea id="prompt" rows="1" placeholder="Ask MiniLLM something…" autofocus></textarea><button class="send" id="send">Send</button></div></section><aside class="panel"><button class="new" id="clear">＋ New conversation</button><h3>Generation</h3><div class="setting"><div class="settingrow"><span>Tokens</span><span class="value" id="tokensVal">80</span></div><input id="tokens" type="range" min="20" max="160" value="80"></div><div class="setting"><div class="settingrow"><span>Temperature</span><span class="value" id="tempVal">0.8</span></div><input id="temp" type="range" min="0.1" max="1.5" step="0.1" value="0.8"></div><div class="setting"><div class="settingrow"><span>Top-k</span><span class="value" id="topkVal">40</span></div><input id="topk" type="range" min="0" max="100" value="40"></div><div style="height:1px;background:var(--line);margin:18px 0"></div><h3>Model</h3><div class="fact"><b>4 decoder blocks</b><span>Masked multi-head self-attention with residual connections.</span></div><div class="fact"><b>192-dimensional embeddings</b><span>6 attention heads and a 768-dimensional feed-forward layer.</span></div><div class="fact"><b>Trained artifacts</b><span>The repository’s 9 MB artifact bundle is loaded by the production API.</span></div></aside></div><div class="footer">MiniLLM · original model implementation preserved</div></section></main></div>
 <script>
-const $=s=>document.querySelector(s);
-const messages=$("#messages"), prompt=$("#prompt"), endpoint=$("#endpoint"), label=$("#connectionLabel");
-endpoint.value=localStorage.getItem("minillm_endpoint")||"";
-function setLabel(){label.textContent=endpoint.value.trim()?"Endpoint configured":"Runtime not connected"}
-setLabel();
-$("#save").onclick=()=>{localStorage.setItem("minillm_endpoint",endpoint.value.trim());setLabel()};
-$("#clear").onclick=()=>{messages.innerHTML='<div class="msg assistant">Conversation cleared. Connect your inference endpoint to continue.</div>'};
-function add(text,kind){const d=document.createElement("div");d.className="msg "+kind;d.textContent=text;messages.appendChild(d);messages.scrollTop=messages.scrollHeight}
-async function send(){
- const text=prompt.value.trim(); if(!text)return;
- add(text,"user");prompt.value="";
- const url=endpoint.value.trim();
- if(!url){add("Connect your MiniLLM inference endpoint in the right panel first. I won’t fabricate a model response.","system");return}
- $("#send").disabled=true;
- try{
-   const res=await fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt:text})});
-   const data=await res.json().catch(()=>({}));
-   if(!res.ok)throw new Error(data.error||("Request failed ("+res.status+")"));
-   add(data.reply ?? data.response ?? JSON.stringify(data),"assistant");
- }catch(err){add("Inference request failed: "+err.message,"system")}
- finally{$("#send").disabled=false}
-}
-$("#send").onclick=send;
-prompt.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send()}});
-document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active");if(b.dataset.view==="about")alert("MiniLLM uses token embeddings, positional encoding, masked multi-head self-attention, FFN blocks, residual connections and a vocabulary projection. The original model files are unchanged.");});
-</script>
-</body>
-</html>
+const $=s=>document.querySelector(s),messages=$("#messages"),prompt=$("#prompt"),send=$("#send"),typing=$("#typing"),settings={tokens:$("#tokens"),temp:$("#temp"),topk:$("#topk")};
+function sync(){$("#tokensVal").textContent=settings.tokens.value;$("#tempVal").textContent=Number(settings.temp.value).toFixed(1);$("#topkVal").textContent=settings.topk.value}Object.values(settings).forEach(x=>x.addEventListener("input",sync));sync();
+function add(text,kind){const d=document.createElement("div");d.className="bubble "+kind;d.textContent=text;messages.appendChild(d);messages.scrollTop=messages.scrollHeight}
+async function health(){try{const r=await fetch("/api/chat");const d=await r.json();if(!r.ok)throw Error(d.error||"offline");$("#health").classList.add("ready");$("#health span").textContent="Runtime ready";$("#topStatus").classList.add("ready");$("#topStatus span").textContent="Model online"}catch(e){$("#health span").textContent="Runtime unavailable";$("#topStatus span").textContent="API unavailable"}}
+async function chat(){const text=prompt.value.trim();if(!text||send.disabled)return;add(text,"user");prompt.value="";send.disabled=true;typing.classList.add("show");try{const r=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt:text,max_new_tokens:Number(settings.tokens.value),temperature:Number(settings.temp.value),top_k:Number(settings.topk.value)})});const d=await r.json();if(!r.ok)throw Error(d.error||"Generation failed");add(d.reply||"(The model returned an empty response.)","assistant")}catch(e){add("The model could not respond: "+e.message,"notice")}finally{send.disabled=false;typing.classList.remove("show");prompt.focus()}}
+send.onclick=chat;prompt.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();chat()}});$("#clear").onclick=()=>{messages.innerHTML='<div class="bubble assistant">New conversation. I’m ready for your next prompt.</div>';prompt.focus()};$("#about").onclick=()=>alert("MiniLLM is a decoder-only Transformer with 4 blocks, 6 attention heads, 192-dimensional embeddings, a 768-dimensional FFN, causal attention, SentencePiece tokenization, and the trained weights shipped with this repository.");health();
+</script></body></html>
