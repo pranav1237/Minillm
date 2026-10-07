@@ -3,7 +3,7 @@
   "functions": {
     "api/chat.py": {
       "maxDuration": 300,
-      "includeFiles": ["artifacts.zip"],
+      "includeFiles": "artifacts.zip",
       "excludeFiles": "{data/**,main.ipynb,*.csv,*.md,tests/**,**/__pycache__/**}"
     }
   },
